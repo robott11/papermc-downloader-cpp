@@ -1,4 +1,11 @@
 /.vs
+/.idea
+Makefile
+*.make
+/obj
+*.d
+*.o
+/build
 
 Skip to content
 Search or jump to…

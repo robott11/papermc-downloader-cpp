@@ -1,7 +1,7 @@
 #include <iostream>
+#include "curl/curl.h"
 #include "nlohmann/json.hpp"
 #include "PaperMC.h"
-#include "curl/curl.h"
 
 using json = nlohmann::json;
 
@@ -35,7 +35,4 @@ void PaperMC::getVersions()
 			std::cout << version << std::endl;
 		}
 	}
-
-	std::cout << std::endl << "Precione alguma tecla para sair..." << std::endl;
-	std::cin.get();
 }
