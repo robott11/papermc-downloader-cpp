@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Cli.h"
 #include "PaperMC.h"
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 Cli::Cli(int arg_c, char* arg_v[])
 {
@@ -16,6 +19,11 @@ void Cli::run()
 	}
 	else {
 		PaperMC paper;
-		paper.getVersions();
-	}
+
+        json versions = paper.getVersions();
+        std::string version = paper.selectVersion(versions);
+        json builds = paper.getBuilds(version);
+        std::string build = paper.selectBuild(builds);
+        paper.download(version, build);
+    }
 }
