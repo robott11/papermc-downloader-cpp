@@ -1,25 +1,32 @@
 -- premake5.lua
-workspace "HelloWorld"
-configurations { "Debug", "Release" }
+workspace "PaperMC-tool"
+    configurations { "Debug", "Release" }
+    platforms { "x32", "x64" }
 
-project "PaperMC-tool"
-    kind "ConsoleApp"
-    language "C++"
-    targetdir "build/%{cfg.buildcfg}"
-    includedirs {
-        "vendor/curl/include",
-        "vendor/nlohmann/include"
-    }
-    links "curl"
+    project "PaperMC-tool"
+        kind "ConsoleApp"
+        language "C++"
+        objdir "build/%{cfg.platform}/%{cfg.buildcfg}/%{prj.name}/obj"
+        targetdir "build/%{cfg.platform}/%{cfg.buildcfg}/%{prj.name}/bin"
+        
+        files { "PaperMC-tool/*.h", "PaperMC-tool/*.cpp" }
 
-    files { "**.h", "**.cpp" }
+        vpaths {
+            ["Headers"] = "**.h",
+            ["Sources"] = "**.cpp"
+         }
+        
+        includedirs {
+            "vendor/curl/include",
+            "vendor/nlohmann/include"
+        }
+        links { "libcurl" }
+        include "vendor/curl"
 
-    filter "configurations:Debug"
-        defines { "DEBUG" }
-        symbols "On"
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            symbols "On"
 
-    filter "configurations:Release"
-        defines { "NDEBUG" }
-        optimize "On"
-
-    include "vendor/curl"
+        filter "configurations:Release"
+            defines { "NDEBUG" }
+            optimize "Speed"

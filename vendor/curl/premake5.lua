@@ -1,21 +1,29 @@
-project "curl-lib"
+project "libcurl"
+	configurations { "Debug", "Release" }
+	objdir "../../build/%{cfg.platform}/%{cfg.buildcfg}/%{prj.name}/obj"
+    targetdir "../../build/%{cfg.platform}/%{cfg.buildcfg}/%{prj.name}/bin"
 	language    "C"
 	kind        "StaticLib"
-	externalincludedirs { "include" }
-	includedirs { "lib", "../mbedtls/include" }
-	defines     { "BUILDING_LIBCURL", "CURL_STATICLIB", "HTTP_ONLY" }
+	includedirs { "lib", "include" }
 	warnings    "off"
 
-	if not _OPTIONS["no-zlib"] then
-		defines     { 'USE_ZLIB' }
-		includedirs { '../zlib' }
-	end
-
-	files
-	{
+	files {
 		"**.h",
 		"**.c"
 	}
+
+	vpaths {
+		["Headers"] = "**.h",
+		["Sources/*"] = "**.c"
+	 }
+
+	filter "configurations:Debug"
+      defines { "_DEBUG", "BUILDING_LIBCURL", "DEBUGBUILD", "CURL_STATICLIB", "USE_IPV6" }
+      symbols "On"
+
+   filter "configurations:Release"
+      defines { "NDEBUG", "BUILDING_LIBCURL", "CURL_STATICLIB", "USE_IPV6" }
+      optimize "Speed"
 
 	filter { "system:windows" }
 		defines { "USE_SCHANNEL", "USE_WINDOWS_SSPI" }
