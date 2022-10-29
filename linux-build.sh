@@ -2,4 +2,4 @@
 
 echo "Building project..."
 
-utils/premake5 gmake
+utils/premake5 gmake2

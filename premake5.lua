@@ -20,7 +20,7 @@ workspace "PaperMC-tool"
             "vendor/curl/include",
             "vendor/nlohmann/include"
         }
-        links { "libcurl" }
+        links { "curl-lib" }
         include "vendor/curl"
 
         filter "configurations:Debug"

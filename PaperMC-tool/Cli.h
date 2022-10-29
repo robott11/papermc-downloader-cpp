@@ -1,15 +1,17 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 class Cli
 {
 public:
-	Cli(int arg_c, char* arg_v[]);
+	Cli(std::vector<std::string> args);
+    void handle_args();
+    void help();
 	void run();
 
 private:
-	int arg_c;
-	char** arg_v;
+    std::vector<std::string> args;
 };
 
